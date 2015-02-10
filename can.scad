@@ -12,7 +12,7 @@ module can() {
   union () {
     translate([0,0, CAN_HEIGHT+CAN_TOP_HEIGHT]) cap();
 
-    color("silver", 0.8) union() {
+    color("silver", 0.7) union() {
       can_body();
       translate([0,0,CAN_HEIGHT]) can_top();
     }
@@ -24,7 +24,10 @@ module can_body() {
 }
 
 module can_top() {
-  cylinder(d1=CAN_TOP_BOTTOM_DIAMETER, d2=CAN_TOP_TOP_DIAMETER, h=CAN_TOP_HEIGHT, $fn=80);
+  difference() {
+    sphere(d=CAN_TOP_BOTTOM_DIAMETER+9, $fn=100);
+    translate([0,0,CAN_TOP_BOTTOM_DIAMETER/2]) cylinder(d=CAP_RIM_DIAMETER+2, h=4);
+  }
 }
 
 module cap_rim() {
@@ -37,8 +40,8 @@ module cap_body() {
 
 module cap() {
   union() {
+    color("white")
     difference() {
-      color("white")
       union() {
         cap_rim();
 
@@ -46,7 +49,7 @@ module cap() {
       }
       translate([0,-4,CAP_BODY_HEIGHT*3]) sphere(CAP_BODY_DIAMETER, $fn=100);
     }
-    % color("red") translate([0,1,10]) rotate([90,0,0]) cylinder(h=CAP_BODY_DIAMETER-1, d=4, center=true, $fn=80);
+    color("red") translate([0,1,10]) rotate([90,0,0]) cylinder(h=CAP_BODY_DIAMETER-1, d=4, center=true, $fn=80);
   }
 }
 
